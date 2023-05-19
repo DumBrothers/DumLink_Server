@@ -12,8 +12,11 @@ public class DumForm {
     private String firstTag;
     private String secondTag;
     private String thirdTag;
+    private Long forderId;
+    private Long userId;
+
 
     public Dum toEntity(){
-        return new Dum(null,link,firstTag,secondTag,thirdTag);
+        return new Dum(null,link,firstTag,secondTag,thirdTag,forderId,userId);
     }
 }
