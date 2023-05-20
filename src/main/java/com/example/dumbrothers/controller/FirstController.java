@@ -2,7 +2,7 @@ package com.example.dumbrothers.controller;
 
 import com.example.dumbrothers.DuMbrothersApplication;
 import com.example.dumbrothers.dto.DumForm;
-import com.example.dumbrothers.entity.Article;
+//import com.example.dumbrothers.entity.Article;
 import com.example.dumbrothers.entity.Dum;
 import com.example.dumbrothers.repository.DumRepository;
 import lombok.ToString;
