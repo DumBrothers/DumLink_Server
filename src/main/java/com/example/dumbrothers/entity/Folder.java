@@ -4,31 +4,22 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Getter
-public class Dum {
+
+public class Folder {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long folderId;
     @Column
-    private String link;
-    @Column
-    private String firstTag;
-    @Column
-    private String secondTag;
-    @Column
-    private String thirdTag;
+    private String folderName;
     @Column
     private Long userId;
-    //@ManyToOne
-    //@JoinColumn(name="folder_id")
-    @Column
-    private Long folderId;
+
 
 
 }

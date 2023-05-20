@@ -1,53 +1,46 @@
 package com.example.dumbrothers.controller;
 
-import com.example.dumbrothers.DuMbrothersApplication;
 import com.example.dumbrothers.dto.DumForm;
 import com.example.dumbrothers.entity.Dum;
-import com.example.dumbrothers.repository.DumRepository;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import com.example.dumbrothers.service.DumService;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 @RestController
 @Slf4j
 public class FirstController {
+
     @Autowired
-    private DumRepository dumRepository;
+    private DumService dumService;
+
+
 
     @GetMapping("/dum")
-    public List<Dum> dum(Model modle){
-        return dumRepository.findAll();
+    public List<Dum> show(){
+        return dumService.show();
     }
 
     @PostMapping("/dum/input")
-    public Dum create(@RequestBody DumForm form){
-        Dum dum=form.toEntity();
-        return dumRepository.save(dum);
+    public ResponseEntity<Dum> create(@RequestBody DumForm dto){
+        Dum create=dumService.create(dto);
+        return (create != null)?
+                ResponseEntity.status(HttpStatus.OK).body(create):
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
 
     @DeleteMapping("dum/{id}")
     public ResponseEntity<Dum> delete(@PathVariable Long id){
-
-        //대상찾기
-        Dum target=dumRepository.findById(id).orElse(null);
-        //잘못된 요청처리
-        if (target == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-
-        //대상 삭제
-        dumRepository.delete(target);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        Dum deleted=dumService.delete(id);
+       return (deleted != null)?
+               ResponseEntity.status(HttpStatus.OK).build():
+               ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
 }
