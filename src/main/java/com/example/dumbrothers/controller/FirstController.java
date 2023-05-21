@@ -1,58 +1,44 @@
 package com.example.dumbrothers.controller;
 
-import com.example.dumbrothers.DuMbrothersApplication;
 import com.example.dumbrothers.dto.DumForm;
-//import com.example.dumbrothers.entity.Article;
 import com.example.dumbrothers.entity.Dum;
-import com.example.dumbrothers.repository.DumRepository;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import java.lang.reflect.Array;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import com.example.dumbrothers.service.DumService;
+
 import java.util.List;
 
-@Controller
+@RestController
 @Slf4j
 public class FirstController {
-    @Autowired
-    private DumRepository dumRepository;
-    @GetMapping("/hi")
-    public String niceToMeetYou(Model model){
-        model.addAttribute("username","jw");
-        return "greetings"; //templates/greetings.mustache
-    }
 
-    @GetMapping("/bye")
-    public String seeYouNext(Model model){
-        model.addAttribute("nickname","jw");
-        return "goodbye";
-    }
+    @Autowired
+    private DumService dumService;
+
     @GetMapping("/dum")
-    public String dum(Model modle){
-        return "dum.html";
+    public List<Dum> show(){
+        return dumService.show();
     }
 
     @PostMapping("/dum/input")
-    public String create(DumForm form){
-        Dum dum=form.toEntity();
-        Dum saved=dumRepository.save(dum);
-        System.out.println(saved.toString());
-        return "";
+    public ResponseEntity<Dum> create(@RequestBody DumForm dto){
+        Dum create=dumService.create(dto);
+        return (create != null)?
+                ResponseEntity.status(HttpStatus.OK).body(create):
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
 
-    @GetMapping("/dum/index")
-    public String index(Model model){
-        List<Dum> dumEntityList = dumRepository.findAll();
-        model.addAttribute("dumlist","dumEntityList");
-        return "";
+    @DeleteMapping("dum/{id}")
+    public ResponseEntity<Dum> delete(@PathVariable Long id){
+        Dum deleted=dumService.delete(id);
+       return (deleted != null)?
+               ResponseEntity.status(HttpStatus.OK).build():
+               ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
 }
