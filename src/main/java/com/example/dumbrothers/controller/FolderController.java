@@ -4,6 +4,7 @@ import com.example.dumbrothers.dto.FolderForm;
 import com.example.dumbrothers.entity.Dum;
 import com.example.dumbrothers.entity.Folder;
 import com.example.dumbrothers.repository.FolderRepository;
+import com.example.dumbrothers.service.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,19 +18,28 @@ public class FolderController {
     @Autowired
     private FolderRepository folderRepository;
 
+    @Autowired
+    private FolderService folderService;
 
 
     @GetMapping("/dum/folder") //폴더를 보여주는 페이지
     public List<Folder> showfolder() {
-        return folderRepository.findAll();
+        return folderService.show();
     }
 
+//    @PostMapping("/dum/folder/add")
+//    public Folder create(@RequestBody FolderForm folderForm){
+//        Folder folder = folderForm.toEntity();
+//        return folderRepository.save(folder);
+//
+//    }
     @PostMapping("/dum/folder/add")
-    public Folder create(@RequestBody FolderForm folderForm){
-        Folder folder = folderForm.toEntity();
-        return folderRepository.save(folder);
+    public ResponseEntity<Folder> create(@RequestBody FolderForm folderForm){
+        Folder folder=folderService.save(folderForm);
+        return ResponseEntity.status(HttpStatus.OK).body(folder);
 
     }
+
     @DeleteMapping("dum/folder/{id}")
     public ResponseEntity<Folder> delete(@PathVariable Long id){
 
