@@ -21,8 +21,15 @@ public class DumForm {
     private Long userId;
     private Long folderId;
 
-    public Dum toEntity(){
-            return new Dum(id, link, firstTag, secondTag, thirdTag, userId,folderId);
-
+    public static DumForm createlinkDto(Dum dum){
+        return new DumForm(
+                dum.getId(),
+                dum.getLink(),
+                dum.getFirstTag(),
+                dum.getSecondTag(),
+                dum.getThirdTag(),
+                dum.getUserId(),
+                dum.getFolder().getFolderId()
+        );
     }
 }

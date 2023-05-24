@@ -26,12 +26,21 @@ public class FirstController {
         return dumService.show();
     }
 
-    @PostMapping("/dum/input")
-    public ResponseEntity<Dum> create(@RequestBody DumForm dto){
-        Dum create=dumService.create(dto);
-        return (create != null)?
-                ResponseEntity.status(HttpStatus.OK).body(create):
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//    @PostMapping("/dum/input")
+//    public ResponseEntity<Dum> create(@RequestBody DumForm dto){
+//        Dum create=dumService.create(dto);
+//        return (create != null)?
+//                ResponseEntity.status(HttpStatus.OK).body(create):
+//                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//    }
+
+    @PostMapping("dum/input")
+    public ResponseEntity<DumForm> create(@RequestBody DumForm dto){
+
+        //서비스에게 위임
+        DumForm createdDto=dumService.create(dto);
+        //결과 응답
+        return ResponseEntity.status(HttpStatus.OK).body(createdDto);
     }
 
 
