@@ -20,6 +20,4 @@ public class Folder {
     @Column
     private Long userId;
 
-
-
 }

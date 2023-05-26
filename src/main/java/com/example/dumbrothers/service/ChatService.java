@@ -18,11 +18,12 @@ public class ChatService {
     public ChatService() {
         this.webClient = WebClient.create();
     }
-
-    public String getTags() {
+    //http://203.255.3.32:8001/chat/?metaTags
+    public String getTags(String parameterValue) {
         URI uri = UriComponentsBuilder
-                .fromUriString("http://127.0.0.1:8000")
+                .fromUriString("http://203.255.3.32:8001")
                 .path("/chat/")
+                .queryParam("metaTags", parameterValue) // 쿼리 파라미터 추가
                 .encode()
                 .build()
                 .toUri();
@@ -39,4 +40,3 @@ public class ChatService {
         return responseEntity.getBody();
     }
 }
-
