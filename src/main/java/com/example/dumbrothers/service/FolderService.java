@@ -27,7 +27,7 @@ public class FolderService {
         Folder folder=dto.toEntity();
         Folder target=folderRepository.findById(id).orElse(null);
 
-        if (target==null||id!=folder.getFolderId()){
+        if (target==null||id!=target.getFolderId()){
             return null;
         }
         target.patch(folder);

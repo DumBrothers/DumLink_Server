@@ -2,10 +2,7 @@ package com.example.dumbrothers.entity;
 
 import com.example.dumbrothers.dto.DumForm;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
@@ -13,6 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 @NoArgsConstructor
 @ToString
 @Getter
+@Setter
 public class Dum {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,12 +60,14 @@ public class Dum {
         );
     }
 //    public void patch(DumForm dto) {
+//
 //        //예외 발생
 //        if (this.id != dto.getId())
 //            throw new IllegalArgumentException("댓글 수정실패 잘못된 id가 입력");
 //        //객체를 갱신
+//        System.out.println("#######"+this.folder.getFolderId());
 //        if(this.folder.getFolderId()!=null)
-//            this.folder.s
+//           this.folder.set()=dto.getFolderId();
 //        if(dto.getBody()!=null)
 //            this.body=dto.getBody();
 //    }
