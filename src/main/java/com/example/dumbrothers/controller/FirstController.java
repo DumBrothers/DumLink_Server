@@ -1,58 +1,66 @@
 package com.example.dumbrothers.controller;
 
-import com.example.dumbrothers.DuMbrothersApplication;
+import com.example.dumbrothers.connect.LinkScrap;
 import com.example.dumbrothers.dto.DumForm;
-import com.example.dumbrothers.entity.Article;
 import com.example.dumbrothers.entity.Dum;
-import com.example.dumbrothers.repository.DumRepository;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import com.example.dumbrothers.service.DumService;
 
-import java.lang.reflect.Array;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
 @Slf4j
 public class FirstController {
+
     @Autowired
-    private DumRepository dumRepository;
-    @GetMapping("/hi")
-    public String niceToMeetYou(Model model){
-        model.addAttribute("username","jw");
-        return "greetings"; //templates/greetings.mustache
-    }
+    private DumService dumService;
 
-    @GetMapping("/bye")
-    public String seeYouNext(Model model){
-        model.addAttribute("nickname","jw");
-        return "goodbye";
-    }
+
+
     @GetMapping("/dum")
-    public String dum(Model modle){
-        return "dum.html";
+    public List<Dum> show(){
+        return dumService.show();
     }
 
-    @PostMapping("/dum/input")
-    public String create(DumForm form){
-        Dum dum=form.toEntity();
-        Dum saved=dumRepository.save(dum);
-        System.out.println(saved.toString());
-        return "";
+//    @PostMapping("/dum/input")
+//    public ResponseEntity<Dum> create(@RequestBody DumForm dto){
+//        Dum create=dumService.create(dto);
+//        return (create != null)?
+//                ResponseEntity.status(HttpStatus.OK).body(create):
+//                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//    }
+
+    @PostMapping("dum/input")
+    public ResponseEntity<DumForm> create(@RequestBody DumForm dto){
+
+
+        //서비스에게 위임
+        DumForm createdDto=dumService.create(dto);
+        //결과 응답
+        return ResponseEntity.status(HttpStatus.OK).body(createdDto);
     }
 
+//    @PatchMapping("dum/{id}")
+//    public ResponseEntity<DumForm> update(@PathVariable Long id, @RequestBody DumForm dto) {
+//
+//        DumForm updatedDto = dumService.update(id, dto);
+//        return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
+//    }
 
-    @GetMapping("/dum/index")
-    public String index(Model model){
-        List<Dum> dumEntityList = dumRepository.findAll();
-        model.addAttribute("dumlist","dumEntityList");
-        return "";
+
+        @DeleteMapping("dum/{id}")
+    public ResponseEntity<Dum> delete(@PathVariable Long id){
+        Dum deleted=dumService.delete(id);
+       return (deleted != null)?
+               ResponseEntity.status(HttpStatus.OK).build():
+               ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
 }

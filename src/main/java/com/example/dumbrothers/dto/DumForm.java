@@ -1,19 +1,41 @@
 package com.example.dumbrothers.dto;
 
 import com.example.dumbrothers.entity.Dum;
+import com.example.dumbrothers.entity.Folder;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @AllArgsConstructor
 @ToString
+@Getter
+@NoArgsConstructor
+@Setter
 public class DumForm {
+    private Long id;
     private String link;
     private String firstTag;
     private String secondTag;
     private String thirdTag;
+    private Long userId;
+    private Long folderId;
+    private String title;
+    private String image;
+    private String description;
 
-    public Dum toEntity(){
-        return new Dum(null,link,firstTag,secondTag,thirdTag);
+
+    public static DumForm createlinkDto(Dum dum){
+        return new DumForm(
+                dum.getId(),
+                dum.getLink(),
+                dum.getFirstTag(),
+                dum.getSecondTag(),
+                dum.getThirdTag(),
+                dum.getUserId(),
+                dum.getFolder().getFolderId(),
+                dum.getTitle(),
+                dum.getImage(),
+                dum.getDescription()
+        );
     }
 }
