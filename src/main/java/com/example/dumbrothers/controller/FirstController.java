@@ -2,7 +2,7 @@ package com.example.dumbrothers.controller;
 
 
 import com.example.dumbrothers.connect.LinkScrap;
-=
+
 import com.example.dumbrothers.dto.DumForm;
 import com.example.dumbrothers.entity.Dum;
 import lombok.extern.slf4j.Slf4j;
