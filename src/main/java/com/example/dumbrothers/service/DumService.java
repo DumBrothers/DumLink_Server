@@ -1,5 +1,6 @@
 package com.example.dumbrothers.service;
 
+import com.example.dumbrothers.connect.LinkScrap;
 import com.example.dumbrothers.dto.DumForm;
 import com.example.dumbrothers.dto.FolderForm;
 import com.example.dumbrothers.entity.Dum;
@@ -9,7 +10,11 @@ import com.example.dumbrothers.repository.FolderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+
 
 @Service
 public class DumService {
@@ -25,6 +30,20 @@ public class DumService {
         if (dumNum==null){
             dumNum=1L;
         }
+
+        String url = dto.getLink();
+
+        try {
+            Map<String, String> ogTag = LinkScrap.handleSendText(url);
+            System.out.println("########"+ogTag.get("title")+"#######" + ogTag.get("image")+ogTag.get("description"));
+            dto.setTitle(ogTag.get("title"));
+            dto.setImage(ogTag.get("image"));
+            dto.setDescription(ogTag.get("description"));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
         Folder folder = folderRepository.findById(dumNum)
                 .orElseThrow(()->new IllegalArgumentException("주소 생성 실패 대상 폴더가 없습니다"));
@@ -58,4 +77,20 @@ public class DumService {
         dumRepository.delete(target);
         return target;
     }
+
+//    public DumForm update(Long id, DumForm dto) {
+//        //댓글 조회 및 예외 발생
+//        Dum target=  dumRepository.findById(id)
+//                .orElseThrow(()->new IllegalArgumentException("댓글 수정실패 대상 댓글이 없습니다")
+//                );
+//
+//        //댓글 수정
+//        target.patch(dto);
+//        //DB로 갱신
+//        Comment updated=commentRepository.save(target);
+//
+//        //댓글 엔티티를 DTO로 변환 및 반환
+//        return CommentDto.createCommentDto(updated);
+//    }
+
 }

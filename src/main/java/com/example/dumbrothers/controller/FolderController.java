@@ -41,7 +41,16 @@ public class FolderController {
 
     }
 
-    @DeleteMapping("dum/folder/{id}")
+    @PatchMapping("/dum/folder/{id}")
+    public ResponseEntity<Folder> update(@PathVariable Long id, @RequestBody FolderForm dto){
+
+        Folder updated=folderService.update(id,dto);
+        return (updated!=null) ?
+                ResponseEntity.status(HttpStatus.OK).body(updated):
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @DeleteMapping("/dum/folder/{id}")
     public ResponseEntity<Folder> delete(@PathVariable Long id){
 
         //대상찾기

@@ -2,16 +2,17 @@ package com.example.dumbrothers.dto;
 
 import com.example.dumbrothers.entity.Dum;
 import com.example.dumbrothers.entity.Folder;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
 
 @AllArgsConstructor
 @ToString
 @Getter
 @NoArgsConstructor
+
+@Setter
 public class DumForm {
     private Long id;
     private String link;
@@ -20,6 +21,10 @@ public class DumForm {
     private String thirdTag;
     private Long userId;
     private Long folderId;
+    private String title;
+    private String image;
+    private String description;
+
 
     public static DumForm createlinkDto(Dum dum){
         return new DumForm(
@@ -30,6 +35,10 @@ public class DumForm {
                 dum.getThirdTag(),
                 dum.getUserId(),
                 dum.getFolder().getFolderId()
+                dum.getFolder().getFolderId(),
+                dum.getTitle(),
+                dum.getImage(),
+                dum.getDescription()
         );
     }
 }

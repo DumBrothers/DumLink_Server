@@ -20,4 +20,11 @@ public class Folder {
     @Column
     private Long userId;
 
+
+    public void patch(Folder folder) {
+        if(folder.folderName !=null){
+            this.folderName=folder.folderName;
+        }
+    }
+
 }

@@ -22,4 +22,16 @@ public class FolderService {
         Folder foldercreate=folderRepository.save(folder);
         return foldercreate;
     }
+
+    public Folder update(Long id, FolderForm dto) {
+        Folder folder=dto.toEntity();
+        Folder target=folderRepository.findById(id).orElse(null);
+
+        if (target==null||id!=folder.getFolderId()){
+            return null;
+        }
+        target.patch(folder);
+        Folder updated=folderRepository.save(target);
+        return updated;
+    }
 }

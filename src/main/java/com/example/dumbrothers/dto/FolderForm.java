@@ -2,11 +2,7 @@ package com.example.dumbrothers.dto;
 
 import com.example.dumbrothers.entity.Dum;
 import com.example.dumbrothers.entity.Folder;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
+import lombok.*;
 
 @AllArgsConstructor
 @ToString
