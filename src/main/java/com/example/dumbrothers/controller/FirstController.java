@@ -1,6 +1,8 @@
 package com.example.dumbrothers.controller;
 
+
 import com.example.dumbrothers.connect.LinkScrap;
+=
 import com.example.dumbrothers.dto.DumForm;
 import com.example.dumbrothers.entity.Dum;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +23,6 @@ public class FirstController {
 
     @Autowired
     private DumService dumService;
-
 
 
     @GetMapping("/dum")
@@ -55,7 +56,8 @@ public class FirstController {
 //    }
 
 
-        @DeleteMapping("dum/{id}")
+
+    @DeleteMapping("dum/{id}")
     public ResponseEntity<Dum> delete(@PathVariable Long id){
         Dum deleted=dumService.delete(id);
        return (deleted != null)?

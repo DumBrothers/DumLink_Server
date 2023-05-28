@@ -6,10 +6,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.*;
 
+
 @AllArgsConstructor
 @ToString
 @Getter
 @NoArgsConstructor
+
 @Setter
 public class DumForm {
     private Long id;
@@ -32,6 +34,7 @@ public class DumForm {
                 dum.getSecondTag(),
                 dum.getThirdTag(),
                 dum.getUserId(),
+                dum.getFolder().getFolderId()
                 dum.getFolder().getFolderId(),
                 dum.getTitle(),
                 dum.getImage(),

@@ -10,9 +10,11 @@ import com.example.dumbrothers.repository.FolderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
 
 @Service
 public class DumService {
@@ -28,6 +30,7 @@ public class DumService {
         if (dumNum==null){
             dumNum=1L;
         }
+
         String url = dto.getLink();
 
         try {
@@ -75,7 +78,6 @@ public class DumService {
         return target;
     }
 
-
 //    public DumForm update(Long id, DumForm dto) {
 //        //댓글 조회 및 예외 발생
 //        Dum target=  dumRepository.findById(id)
@@ -90,4 +92,5 @@ public class DumService {
 //        //댓글 엔티티를 DTO로 변환 및 반환
 //        return CommentDto.createCommentDto(updated);
 //    }
+
 }

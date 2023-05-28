@@ -32,6 +32,11 @@ public class Dum {
     @JoinColumn(name = "folder_id")
     private Folder folder;
 
+
+    @ManyToOne
+    @JoinColumn(name = "folder_id")
+    private Folder folder;
+
     @Column
     private String title;
     @Column
@@ -39,11 +44,15 @@ public class Dum {
     @Column
     private String description;
 
+    public static Dum createDum(DumForm dto, Folder folder) {
+        //if (dto.getId() != null)
+           // throw new IllegalArgumentException("링크생성 실패 댓글의 id가 잇어야함");
 
 
     public static Dum createDum(DumForm dto, Folder folder) {
         //if (dto.getId() != null)
            // throw new IllegalArgumentException("링크생성 실패 댓글의 id가 잇어야함");
+
 
   //      if (dto.getFolderId() != folder.getFolderId())
    //         throw new IllegalArgumentException("링크생성 실패 id가 잘못되엇음");
@@ -54,6 +63,10 @@ public class Dum {
                 dto.getSecondTag(),
                 dto.getThirdTag(),
                 dto.getUserId(),
+
+                folder
+        );
+    }
                 folder,
                 dto.getTitle(),
                 dto.getImage(),
