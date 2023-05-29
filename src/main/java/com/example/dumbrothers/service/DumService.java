@@ -10,7 +10,7 @@ import com.example.dumbrothers.repository.FolderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.example.dumbrothers.controller.ChatController;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +23,10 @@ public class DumService {
     private DumRepository dumRepository;
     @Autowired
     private FolderRepository folderRepository;
-
+    private ChatService chatService;
+    public DumService(ChatService chatService) {
+        this.chatService = chatService;
+    }
     public DumForm create(DumForm dto) {
 
         Long dumNum=dto.getFolderId();
@@ -35,21 +38,35 @@ public class DumService {
 
         try {
             Map<String, String> ogTag = LinkScrap.handleSendText(url);
-            System.out.println("########"+ogTag.get("title")+"#######" + ogTag.get("image")+ogTag.get("description"));
-            dto.setTitle(ogTag.get("title"));
+            System.out.println("########"+ogTag.get("title")+"#######" + ogTag.get("image")+ogTag.get("description")+ogTag.get("head"));
+            if(ogTag.get("title")==null)
+                dto.setTitle(ogTag.get("head"));
+            else
+                dto.setTitle(ogTag.get("title"));
             dto.setImage(ogTag.get("image"));
             dto.setDescription(ogTag.get("description"));
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+        String parameterValue = dto.getDescription() + dto.getTitle();
+        String input = chatService.getTags(parameterValue);
+        input = input.substring(2, input.length() - 2);
+        String[] tags = input.split("\",\"");
+
+        dto.setFirstTag(tags[0]);
+        dto.setSecondTag(tags[1]);
+        dto.setThirdTag(tags[2]);
 
         Folder folder = folderRepository.findById(dumNum)
                 .orElseThrow(()->new IllegalArgumentException("주소 생성 실패 대상 폴더가 없습니다"));
 
         Dum dum=Dum.createDum(dto,folder);
         Dum created=dumRepository.save(dum);
+
+
 
         return DumForm.createlinkDto(created);
     }

@@ -14,8 +14,11 @@ import java.util.Map;
 public class LinkScrap {
     public static Map<String, String> handleSendText(String url) throws IOException {
         Map<String, String> ogMap = new LinkedHashMap<>();
-        Document document = Jsoup.connect(url).userAgent("Android").get();
+        Document document = Jsoup.connect(url).get();
         Elements elements = document.select("meta[property^=og:]");
+
+        ogMap.put("head",document.select("head title").text());
+
         if (elements != null) {
             for (int i = 0; i < elements.size(); i++) {
                 switch (elements.get(i).attr("property")) {
