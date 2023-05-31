@@ -120,6 +120,20 @@ public class DumService {
         return tagList;
     }
 
+    public List<Dum> tagsearch(String tags) {
+        List<Dum> dumList;
+
+        try {
+            dumList = (List<Dum>) show().stream()
+                    .filter(dum -> dum.getTags().contains(tags))
+                    .toList();
+        } catch (Exception e) {
+            // 로깅, 오류 추적 및 처리를 수행하십시오.
+            dumList = Collections.emptyList();
+        }
+        return dumList;
+    }
+
 //    public DumForm update(Long id, DumForm dto) {
 //        //댓글 조회 및 예외 발생
 //        Dum target=  dumRepository.findById(id)
