@@ -22,6 +22,7 @@ public class DumService {
 
     @Autowired
     private DumRepository dumRepository;
+
     @Autowired
     private FolderRepository folderRepository;
     private ChatService chatService;
@@ -29,12 +30,10 @@ public class DumService {
         this.chatService = chatService;
     }
     public DumForm create(DumForm dto) {
-
         Long dumNum=dto.getFolderId();
         if (dumNum==null){
             dumNum=1L;
         }
-
         String url = dto.getLink();
 
         try {
@@ -86,7 +85,7 @@ public class DumService {
         return dumList;
     }
     public List<Dum> show() {
-        return dumRepository.findAll();
+        return dumRepository.findAllOrderByDescId();
     }
 
 //    public Dum create(DumForm dto) {

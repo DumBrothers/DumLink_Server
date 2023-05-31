@@ -22,7 +22,6 @@ public class FirstController {
 
     @GetMapping("/dum")
     public List<Dum> show(){
-
         return dumService.show();
     }
 
