@@ -31,6 +31,7 @@ public class DumService {
     public DumService(ChatService chatService) {
         this.chatService = chatService;
     }
+
     public DumForm create(DumForm dto) {
         Long dumNum=dto.getFolderId();
         if (dumNum==null) {
@@ -47,7 +48,6 @@ public class DumService {
                 dto.setTitle(ogTag.get("title"));
             dto.setImage(ogTag.get("image"));
             dto.setDescription(ogTag.get("description"));
-
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -68,8 +68,6 @@ public class DumService {
         Dum dum=Dum.createDum(dto,folder);
         Dum created=dumRepository.save(dum);
 
-
-
         return DumForm.createlinkDto(created);
     }
 
@@ -86,6 +84,7 @@ public class DumService {
         }
         return dumList;
     }
+
     public List<Dum> show() {
         return dumRepository.findAllOrderByDescId();
     }
@@ -146,8 +145,7 @@ public class DumService {
                 );
 
         target.setFolder(folder);
-        Dum b=dumRepository.save(target);
-
+        Dum b = dumRepository.save(target);
 
         return target;
     }

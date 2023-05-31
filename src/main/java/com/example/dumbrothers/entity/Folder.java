@@ -19,7 +19,8 @@ public class Folder {
     private String folderName;
     @Column
     private Long userId;
-
+    @Column
+    private Long urlCounter;
 
     public void patch(Folder folder) {
         if(folder.folderName !=null){
