@@ -25,6 +25,7 @@ public class Dum {
     private String thirdTag;
     @Column
     private Long userId;
+    //나중에 date 타입으로 user별 url 추가 시간 순으로 가장 먼저 보이게 해야한다.
 
     @ManyToOne
     @JoinColumn(name = "folder_id")
@@ -63,6 +64,7 @@ public class Dum {
     public Object getFolderId() {
         return this.folder.getFolderId();
     }
+
 //    public void patch(DumForm dto) {
 //
 //        //예외 발생
