@@ -63,11 +63,11 @@ public class Dum {
         );
     }
 
-    public Object getFolderId() {
+    public Object showFolderId() {
         return this.folder.getFolderId();
     }
 
-    public List<String> getTags() {
+    public List<String> showTags() {
         return List.of(this.firstTag, this.secondTag, this.thirdTag);
     }
 //    public void patch(DumForm dto) {

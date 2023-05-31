@@ -78,7 +78,7 @@ public class DumService {
 
         try {
             dumList = (List<Dum>) show().stream()
-                    .filter(dum -> dum.getFolderId().equals(id))
+                    .filter(dum -> dum.showFolderId().equals(id))
                     .toList();
         } catch (Exception e) {
             // 로깅, 오류 추적 및 처리를 수행하십시오.
@@ -113,7 +113,7 @@ public class DumService {
     public List<String> tags() {
 
         List<String> tagList =  show().stream()
-                .flatMap(dum -> dum.getTags().stream())
+                .flatMap(dum -> dum.showTags().stream())
                 .distinct()
                 .collect(Collectors.toList());
 
@@ -125,7 +125,7 @@ public class DumService {
 
         try {
             dumList = (List<Dum>) show().stream()
-                    .filter(dum -> dum.getTags().contains(tags))
+                    .filter(dum -> dum.showTags().contains(tags))
                     .toList();
         } catch (Exception e) {
             // 로깅, 오류 추적 및 처리를 수행하십시오.
