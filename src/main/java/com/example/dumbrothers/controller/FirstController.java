@@ -25,6 +25,15 @@ public class FirstController {
         return dumService.show();
     }
 
+    @GetMapping("/dum/tags")
+    public List<String> tags(){
+        return dumService.tags();
+    }
+
+//    @GetMapping("/dum/tags/{tags}")
+//    public List<Dum> tags(@PathVariable String tags){
+//        return dumService.tags(tags);
+//    }
 
 //    @PostMapping("/dum/input")
 //    public ResponseEntity<Dum> create(@RequestBody DumForm dto){

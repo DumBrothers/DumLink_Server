@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -65,6 +67,9 @@ public class Dum {
         return this.folder.getFolderId();
     }
 
+    public List<String> getTags() {
+        return List.of(this.firstTag, this.secondTag, this.thirdTag);
+    }
 //    public void patch(DumForm dto) {
 //
 //        //예외 발생

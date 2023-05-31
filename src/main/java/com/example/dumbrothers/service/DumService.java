@@ -12,9 +12,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.dumbrothers.controller.ChatController;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -106,6 +108,16 @@ public class DumService {
         //대상 삭제
         dumRepository.delete(target);
         return target;
+    }
+
+    public List<String> tags() {
+
+        List<String> tagList =  show().stream()
+                .flatMap(dum -> dum.getTags().stream())
+                .distinct()
+                .collect(Collectors.toList());
+
+        return tagList;
     }
 
 //    public DumForm update(Long id, DumForm dto) {
