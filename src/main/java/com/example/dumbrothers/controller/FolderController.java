@@ -12,29 +12,37 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class FolderController {
+
     @Autowired
     private FolderRepository folderRepository;
 
     @Autowired
     private FolderService folderService;
 
-    //모든폴더를 보여주는 페이지
+
+    //폴더랑 폴더내 link count
     @GetMapping("/dum/folder")
-    public List<Folder> showfolder() {
-        return folderService.show();
+    public List<Folder> showFoldersWithLinkCount() {
+        List<Folder> folders = folderService.show();
+        return folderService.showFolderCount(folders);
     }
+
+    //모든폴더를 보여주는 페이지
+//    @GetMapping("/dum/folder")
+//    public List<Folder> showfolder() {
+//        return folderService.show();
+//    }
 
     //폴더이름을 기준으로 폴더 추가
     @PostMapping("/dum/folder/add")
     public ResponseEntity<Folder> create(@RequestBody FolderForm folderForm){
         Folder folder=folderService.save(folderForm);
         return ResponseEntity.status(HttpStatus.OK).body(folder);
-
     }
 
     //폴더 id 기준으로 폴더이름 수정
@@ -53,6 +61,7 @@ public class FolderController {
 
         //대상찾기
         Folder target=folderRepository.findById(id).orElse(null);
+
         //잘못된 요청처리
         if (target == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
