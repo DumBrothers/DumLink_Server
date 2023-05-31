@@ -59,6 +59,10 @@ public class Dum {
 
         );
     }
+
+    public Object getFolderId() {
+        return this.folder.getFolderId();
+    }
 //    public void patch(DumForm dto) {
 //
 //        //예외 발생

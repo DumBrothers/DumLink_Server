@@ -15,7 +15,6 @@ public class FolderForm {
 
 
     public Folder toEntity(){
-
         return new Folder(null, folderName, userId);
 
     }

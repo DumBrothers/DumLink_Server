@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.dumbrothers.controller.ChatController;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -71,6 +72,19 @@ public class DumService {
         return DumForm.createlinkDto(created);
     }
 
+    public List<Dum> inshow(Long id) {
+        List<Dum> dumList;
+
+        try {
+            dumList = (List<Dum>) show().stream()
+                    .filter(dum -> dum.getFolderId().equals(id))
+                    .toList();
+        } catch (Exception e) {
+            // 로깅, 오류 추적 및 처리를 수행하십시오.
+            dumList = Collections.emptyList();
+        }
+        return dumList;
+    }
     public List<Dum> show() {
         return dumRepository.findAll();
     }

@@ -12,4 +12,5 @@ import java.util.Map;
 public interface DumRepository extends JpaRepository<Dum,Long> {
     @Override
     ArrayList<Dum> findAll();
+
 }
