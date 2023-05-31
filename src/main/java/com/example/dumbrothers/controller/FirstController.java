@@ -34,13 +34,15 @@ public class FirstController {
 //                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 //    }
 
+    @GetMapping("/dum/folder/{id}")
+    public List<Dum> inshow(@PathVariable Long id){
+        return dumService.inshow(id);
+    }
     @PostMapping("dum/input")
     public ResponseEntity<DumForm> create(@RequestBody DumForm dto){
 
         //서비스에게 위임
         DumForm createdDto=dumService.create(dto);
-
-
         return ResponseEntity.status(HttpStatus.OK).body(createdDto);
     }
 
@@ -50,8 +52,6 @@ public class FirstController {
 //        DumForm updatedDto = dumService.update(id, dto);
 //        return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
 //    }
-
-
 
     @DeleteMapping("dum/{id}")
     public ResponseEntity<Dum> delete(@PathVariable Long id){
