@@ -31,7 +31,7 @@ public class DumService {
     }
     public DumForm create(DumForm dto) {
         Long dumNum=dto.getFolderId();
-        if (dumNum==null){
+        if (dumNum==null) {
             dumNum=1L;
         }
         String url = dto.getLink();
