@@ -56,12 +56,12 @@ public class FirstController {
         return ResponseEntity.status(HttpStatus.OK).body(createdDto);
     }
 
-//    @PatchMapping("dum/{id}")
-//    public ResponseEntity<DumForm> update(@PathVariable Long id, @RequestBody DumForm dto) {
-//
-//        DumForm updatedDto = dumService.update(id, dto);
-//        return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
-//    }
+    @PatchMapping("dum/{id}")
+    public ResponseEntity<Dum> update(@PathVariable Long id, @RequestBody DumForm dto) {
+
+        Dum updatedDto = dumService.update(id, dto);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
+    }
 
     @DeleteMapping("dum/{id}")
     public ResponseEntity<Dum> delete(@PathVariable Long id){
