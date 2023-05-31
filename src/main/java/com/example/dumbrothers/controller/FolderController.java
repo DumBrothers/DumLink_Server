@@ -23,19 +23,13 @@ public class FolderController {
     @Autowired
     private FolderService folderService;
 
-
-    @GetMapping("/dum/folder") //폴더를 보여주는 페이지
+    //모든폴더를 보여주는 페이지
+    @GetMapping("/dum/folder")
     public List<Folder> showfolder() {
         return folderService.show();
     }
 
-//    @PostMapping("/dum/folder/add")
-//    public Folder create(@RequestBody FolderForm folderForm){
-//        Folder folder = folderForm.toEntity();
-//        return folderRepository.save(folder);
-//
-//    }
-
+    //폴더이름을 기준으로 폴더 추가
     @PostMapping("/dum/folder/add")
     public ResponseEntity<Folder> create(@RequestBody FolderForm folderForm){
         Folder folder=folderService.save(folderForm);
@@ -43,6 +37,7 @@ public class FolderController {
 
     }
 
+    //폴더 id 기준으로 폴더이름 수정
     @PatchMapping("/dum/folder/{id}")
     public ResponseEntity<Folder> update(@PathVariable Long id, @RequestBody FolderForm dto){
 
@@ -52,6 +47,7 @@ public class FolderController {
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    //폴더 id 기준으로 폴더 삭제
     @DeleteMapping("/dum/folder/{id}")
     public ResponseEntity<Folder> delete(@PathVariable Long id){
 
