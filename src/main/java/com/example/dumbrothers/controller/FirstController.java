@@ -67,7 +67,7 @@ public class FirstController {
     public ResponseEntity<Dum> delete(@PathVariable Long id){
         Dum deleted=dumService.delete(id);
        return (deleted != null)?
-               ResponseEntity.status(HttpStatus.OK).build():
+               ResponseEntity.status(HttpStatus.OK).body(deleted):
                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 

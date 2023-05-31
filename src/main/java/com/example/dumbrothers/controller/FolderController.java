@@ -61,8 +61,7 @@ public class FolderController {
 
         //대상 삭제
         folderRepository.delete(target);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(target);
     }
-
 }
 
