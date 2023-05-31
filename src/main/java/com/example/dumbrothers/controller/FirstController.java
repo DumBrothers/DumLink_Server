@@ -20,34 +20,31 @@ public class FirstController {
     @Autowired
     private DumService dumService;
 
+    //모든 url 출력
     @GetMapping("/dum")
     public List<Dum> show(){
         return dumService.show();
     }
 
+    //모든 tag 출력 (중복제거)
     @GetMapping("/dum/tags")
     public List<String> tags(){
         return dumService.tags();
     }
 
-//    @GetMapping("/dum/tags/{tags}")
-//    public List<Dum> tags(@PathVariable String tags){
-//        return dumService.tags(tags);
-//    }
+    //특정 tag를 가지는 url 출력
+    @GetMapping("/dum/tags/{tags}")
+    public List<Dum> tags(@PathVariable String tags){
+        return dumService.tagsearch(tags);
+    }
 
-//    @PostMapping("/dum/input")
-//    public ResponseEntity<Dum> create(@RequestBody DumForm dto){
-//        Dum create=dumService.create(dto);
-//        return (create != null)?
-//                ResponseEntity.status(HttpStatus.OK).body(create):
-//                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//    }
-
+    //folder id 기준으로 folder 가 가진 url 모두 출력
     @GetMapping("/dum/folder/{id}")
     public List<Dum> inshow(@PathVariable Long id){
         return dumService.inshow(id);
     }
 
+    //url 입력
     @PostMapping("dum/input")
     public ResponseEntity<DumForm> create(@RequestBody DumForm dto){
 
@@ -56,13 +53,15 @@ public class FirstController {
         return ResponseEntity.status(HttpStatus.OK).body(createdDto);
     }
 
-//    @PatchMapping("dum/{id}")
-//    public ResponseEntity<DumForm> update(@PathVariable Long id, @RequestBody DumForm dto) {
-//
-//        DumForm updatedDto = dumService.update(id, dto);
-//        return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
-//    }
+    //url id 기준으로 folder id 변경
+    @PatchMapping("dum/{id}")
+    public ResponseEntity<Dum> update(@PathVariable Long id, @RequestBody DumForm dto) {
 
+        Dum updatedDto = dumService.update(id, dto);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
+    }
+
+    //url id 기준으로 url 삭제
     @DeleteMapping("dum/{id}")
     public ResponseEntity<Dum> delete(@PathVariable Long id){
         Dum deleted=dumService.delete(id);

@@ -78,7 +78,7 @@ public class DumService {
 
         try {
             dumList = (List<Dum>) show().stream()
-                    .filter(dum -> dum.getFolderId().equals(id))
+                    .filter(dum -> dum.showFolderId().equals(id))
                     .toList();
         } catch (Exception e) {
             // 로깅, 오류 추적 및 처리를 수행하십시오.
@@ -113,26 +113,43 @@ public class DumService {
     public List<String> tags() {
 
         List<String> tagList =  show().stream()
-                .flatMap(dum -> dum.getTags().stream())
+                .flatMap(dum -> dum.showTags().stream())
                 .distinct()
                 .collect(Collectors.toList());
 
         return tagList;
     }
 
-//    public DumForm update(Long id, DumForm dto) {
-//        //댓글 조회 및 예외 발생
-//        Dum target=  dumRepository.findById(id)
-//                .orElseThrow(()->new IllegalArgumentException("댓글 수정실패 대상 댓글이 없습니다")
-//                );
-//
-//        //댓글 수정
-//        target.patch(dto);
-//        //DB로 갱신
-//        Comment updated=commentRepository.save(target);
-//
-//        //댓글 엔티티를 DTO로 변환 및 반환
-//        return CommentDto.createCommentDto(updated);
-//    }
+    public List<Dum> tagsearch(String tags) {
+        List<Dum> dumList;
+
+        try {
+            dumList = (List<Dum>) show().stream()
+                    .filter(dum -> dum.showTags().contains(tags))
+                    .toList();
+        } catch (Exception e) {
+            // 로깅, 오류 추적 및 처리를 수행하십시오.
+            dumList = Collections.emptyList();
+        }
+        return dumList;
+    }
+
+    public Dum update(Long id, DumForm dto) {
+        //댓글 조회 및 예외 발생
+        Dum target=  dumRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("댓글 수정실패 대상 댓글이 없습니다")
+                );
+
+        Long a=dto.getFolderId();
+        Folder folder =folderRepository.findById(a)
+                .orElseThrow(()->new IllegalArgumentException("폴더가 없어요")
+                );
+
+        target.setFolder(folder);
+        Dum b=dumRepository.save(target);
+
+
+        return target;
+    }
 
 }
