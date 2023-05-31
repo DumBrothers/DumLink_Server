@@ -25,6 +25,7 @@ public class FirstController {
         return dumService.show();
     }
 
+
 //    @PostMapping("/dum/input")
 //    public ResponseEntity<Dum> create(@RequestBody DumForm dto){
 //        Dum create=dumService.create(dto);
@@ -37,6 +38,7 @@ public class FirstController {
     public List<Dum> inshow(@PathVariable Long id){
         return dumService.inshow(id);
     }
+
     @PostMapping("dum/input")
     public ResponseEntity<DumForm> create(@RequestBody DumForm dto){
 
