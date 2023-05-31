@@ -19,4 +19,5 @@ public class ChatController {
     public String getTags(@RequestParam("metaTags") String parameterValue) {
         return chatService.getTags(parameterValue);
     }
+
 }

@@ -30,6 +30,7 @@ public class DumService {
         this.chatService = chatService;
     }
     public DumForm create(DumForm dto) {
+
         Long dumNum=dto.getFolderId();
         if (dumNum==null) {
             dumNum=1L;
