@@ -44,6 +44,7 @@ public class LinkScrap {
                         if (elements.get(i).attr("content") != null) {
                             ogMap.put("site_name", elements.get(i).attr("content"));
                             break;
+
                         }
                 }
             }

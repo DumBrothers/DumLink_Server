@@ -1,0 +1,38 @@
+<html>
+<head>
+    <script>
+        function submitForm() {
+
+            var urlInput = document.getElementById("link_input").value;
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                "link": urlInput
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:8080/dum/input", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+        }
+    </script>
+</head>
+<body>
+<button id="btn_blue" type="submit" form="myForm">
+
+</button>
+
+<form id="myForm" action="http://localhost:8080/dum/input" method="POST">
+    <input id="link_input" type="text" name="url" placeholder="   링크를 입력해 주세요.">
+</form>
+</form>
+</body>
+</html>

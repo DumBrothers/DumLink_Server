@@ -32,7 +32,6 @@ public class DumService {
 
         try {
             Map<String, String> ogTag = LinkScrap.handleSendText(url);
-            System.out.println("########"+ogTag.get("title")+"#######" + ogTag.get("image")+ogTag.get("description"));
             dto.setTitle(ogTag.get("title"));
             dto.setImage(ogTag.get("image"));
             dto.setDescription(ogTag.get("description"));
