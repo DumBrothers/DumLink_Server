@@ -1,5 +1,6 @@
 package com.example.dumbrothers.connect;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 import org.springframework.data.util.Pair;
@@ -14,7 +15,8 @@ import java.util.Map;
 public class LinkScrap {
     public static Map<String, String> handleSendText(String url) throws IOException {
         Map<String, String> ogMap = new LinkedHashMap<>();
-        Document document = Jsoup.connect(url).get();
+        Document document = Jsoup.connect(url).userAgent("Android").get();
+
         Elements elements = document.select("meta[property^=og:]");
 
         ogMap.put("head",document.select("head title").text());
