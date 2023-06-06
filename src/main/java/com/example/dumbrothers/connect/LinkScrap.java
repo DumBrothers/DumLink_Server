@@ -20,11 +20,6 @@ public class LinkScrap {
         Document document = Jsoup.connect(url).userAgent("DEFAULT_USER_AGENT").get();
 
         Elements elements = document.select("meta[property^=og:]");
-        Elements elements2 = document.select("meta[property^=og:title]");
-        System.out.println("test");
-        System.out.println(elements2.attr("title"));
-
-
 
         if (!elements.isEmpty()) {
             for (int i = 0; i < elements.size(); i++) {
@@ -41,8 +36,8 @@ public class LinkScrap {
                             break;
                         }
                     case "og:title":
-                        if (elements2.attr("title") != null) {
-                            ogMap.put("title", elements2.get(0).attr("content"));
+                        if (elements.attr("title") != null) {
+                            ogMap.put("title", elements.get(0).attr("content"));
                             break;
                         }
                     case "og:description":
