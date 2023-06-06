@@ -25,7 +25,7 @@ public class FolderController {
     private FolderService folderService;
 
 
-    //폴더랑 폴더내 link count
+    //폴더랑 폴더내linkcount
     @GetMapping("/dum/folder")
     public List<Folder> showFoldersWithLinkCount() {
         List<Folder> folders = folderService.show();
