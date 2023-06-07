@@ -1,9 +1,11 @@
 package com.example.dumbrothers.controller;
 
+import com.example.dumbrothers.dto.DumForm;
 import com.example.dumbrothers.dto.FolderForm;
 import com.example.dumbrothers.entity.Dum;
 import com.example.dumbrothers.entity.Folder;
 import com.example.dumbrothers.repository.FolderRepository;
+import com.example.dumbrothers.service.DumService;
 import com.example.dumbrothers.service.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +27,14 @@ public class FolderController {
     @Autowired
     private FolderService folderService;
 
+    @Autowired
+    private DumService dumService;
 
-    //폴더랑 폴더내 link count
+    public FolderController(DumService dumService) {
+        this.dumService = dumService;
+    }
+
+    //폴더랑 폴더내linkcount를 같이 보여준다.
     @GetMapping("/dum/folder")
     public List<Folder> showFoldersWithLinkCount() {
         List<Folder> folders = folderService.show();
@@ -59,17 +67,27 @@ public class FolderController {
     //폴더 id 기준으로 폴더 삭제
     @DeleteMapping("/dum/folder/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
-
-
         //대상찾기
         Folder target=folderRepository.findById(id).orElse(null);
+
+        List<Dum> delLinks = dumService.inshow(id);
 
         //잘못된 요청처리
         if (target == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ID값이 " + id +  "인 folder 삭제에 실패하였습니다.");
         }
 
-        //대상 삭제
+        //대상 삭제 if 폴더내 링크 있다 -> dumfolder(id:1)로 이동
+        if (delLinks.isEmpty()) {
+            folderRepository.delete(target);
+        } else {
+            Folder folder =folderRepository.findById(1L)
+                    .orElseThrow(()->new IllegalArgumentException("폴더가 없어요")
+                    );
+            for(Dum dto : delLinks ){
+                dto.setFolder(folder);
+            }
+        }
         folderRepository.delete(target);
         return ResponseEntity.status(HttpStatus.OK).body("ID값이 " + target.getFolderId() +  "인 folder 삭제에 성공하였습니다.");
     }
