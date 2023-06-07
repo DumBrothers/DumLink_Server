@@ -17,7 +17,7 @@ public class LinkScrap {
     public static Map<String, String> handleSendText(String url) throws IOException {
 
         Map<String, String> ogMap = new LinkedHashMap<>();
-        Document document = Jsoup.connect(url).userAgent("DEFAULT_USER_AGENT").get();
+        Document document = Jsoup.connect(url).userAgent(DEFAULT_USER_AGENT).get();
 
         Elements elements = document.select("meta[property^=og:]");
 
