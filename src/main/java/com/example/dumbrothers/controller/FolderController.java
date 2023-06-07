@@ -1,6 +1,5 @@
 package com.example.dumbrothers.controller;
 
-import com.example.dumbrothers.dto.DumForm;
 import com.example.dumbrothers.dto.FolderForm;
 import com.example.dumbrothers.entity.Dum;
 import com.example.dumbrothers.entity.Folder;
@@ -10,11 +9,9 @@ import com.example.dumbrothers.service.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -67,6 +64,7 @@ public class FolderController {
     //폴더 id 기준으로 폴더 삭제
     @DeleteMapping("/dum/folder/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
+
         //대상찾기
         Folder target=folderRepository.findById(id).orElse(null);
 
