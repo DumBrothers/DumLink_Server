@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 public class FolderController {
 
     @Autowired
@@ -66,6 +67,7 @@ public class FolderController {
     //폴더 id 기준으로 폴더 삭제
     @DeleteMapping("/dum/folder/{id}")
     public ResponseEntity<Folder> delete(@PathVariable Long id){
+
         //대상찾기
         Folder target=folderRepository.findById(id).orElse(null);
 
@@ -73,7 +75,7 @@ public class FolderController {
 
         //잘못된 요청처리
         if (target == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ID값이 " + id +  "인 folder 삭제에 실패하였습니다.");
         }
 
         //대상 삭제 if 폴더내 링크 있다 -> dumfolder(id:1)로 이동
@@ -88,7 +90,7 @@ public class FolderController {
             }
         }
         folderRepository.delete(target);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body("ID값이 " + target.getFolderId() +  "인 folder 삭제에 성공하였습니다.");
     }
 
 }
