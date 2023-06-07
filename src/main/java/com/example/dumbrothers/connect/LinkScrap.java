@@ -1,5 +1,6 @@
 package com.example.dumbrothers.connect;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 import org.springframework.data.util.Pair;
@@ -12,14 +13,15 @@ import java.util.Map;
 
 
 public class LinkScrap {
+    private final static String DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.116 Safari/537.36 Android";
     public static Map<String, String> handleSendText(String url) throws IOException {
+
         Map<String, String> ogMap = new LinkedHashMap<>();
-        Document document = Jsoup.connect(url).get();
+        Document document = Jsoup.connect(url).userAgent(DEFAULT_USER_AGENT).get();
+
         Elements elements = document.select("meta[property^=og:]");
 
-        ogMap.put("head",document.select("head title").text());
-
-        if (elements != null) {
+        if (!elements.isEmpty()) {
             for (int i = 0; i < elements.size(); i++) {
                 switch (elements.get(i).attr("property")) {
                     case "og:image":
@@ -28,14 +30,14 @@ public class LinkScrap {
                             ogMap.put("image", content);
                             break;
                         }
-                    case "og:title":
-                        if (elements.get(i).attr("content") != null) {
-                            ogMap.put("title", elements.get(i).attr("content"));
-                            break;
-                        }
                     case "og:url":
                         if (elements.get(i).attr("content") != null) {
                             ogMap.put("url", elements.get(i).attr("content"));
+                            break;
+                        }
+                    case "og:title":
+                        if (elements.attr("title") != null) {
+                            ogMap.put("title", elements.get(0).attr("content"));
                             break;
                         }
                     case "og:description":
@@ -51,9 +53,12 @@ public class LinkScrap {
                 }
             }
         }
+        else{
+            ogMap.put("image", "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuJlIh%2FbtsiPPsXB4u%2FqwPqKXFKdkwpz7PBVItyoK%2Fimg.png");
+            ogMap.put("title", document.select("head > title").text());
+        }
+
 
         return ogMap;
     }
 }
-
-
