@@ -1,5 +1,6 @@
 package com.example.dumbrothers.connect;
 
+
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.example.dumbrothers.connect.URLUtils.getOriginalLink;
 
 
 public class LinkScrap {
@@ -17,6 +19,9 @@ public class LinkScrap {
     private final static String DEFAULT_URL_IMAGE = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmNxd9%2FbtsjcaQQ6Yt%2F1MAaZUmCsoUzyf7wkAxVbk%2Fimg.png";
     private final static String DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.116 Safari/537.36";
     public static Map<String, String> handleSendText(String url) throws IOException {
+
+        url = getOriginalLink(url) ;
+
 
         Map<String, String> ogMap = new LinkedHashMap<>();
         Document document = Jsoup.connect(url).userAgent(DEFAULT_USER_AGENT).get();
@@ -28,6 +33,7 @@ public class LinkScrap {
         ogMap.put("description", document.select("meta[name=description]").attr("content"));
         ogMap.put("site_name", document.select("meta[property=og:site_name]").attr("content"));
 
+        System.out.println(!elements.isEmpty());
         if (!elements.isEmpty()) {
             elements.stream().filter(element -> element.hasAttr("content")).forEach(element -> {
                 switch (element.attr("property")) {
