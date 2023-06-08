@@ -55,9 +55,18 @@ public class DumService {
         input = input.substring(2, input.length() - 2);
         String[] tags = input.split("\",\"");
 
-        dto.setFirstTag(tags[0]);
-        dto.setSecondTag(tags[1]);
-        dto.setThirdTag(tags[2]);
+
+        if(tags[0].length() < 8) {
+            dto.setFirstTag(tags[0]);
+        } else { dto.setFirstTag("기타");}
+
+        if(tags[1].length() < 8) {
+            dto.setSecondTag(tags[1]);
+        } else { dto.setSecondTag("기타");}
+
+        if(tags[2].length() < 8) {
+            dto.setThirdTag(tags[2]);
+        } else { dto.setThirdTag("기타");}
 
         Folder folder = folderRepository.findById(dumNum)
                 .orElseThrow(()->new IllegalArgumentException("주소 생성 실패 대상 폴더가 없습니다"));
