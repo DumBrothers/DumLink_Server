@@ -70,8 +70,8 @@ public class FolderController {
 
         List<Dum> delLinks = dumService.inshow(id);
 
-        //잘못된 요청처리
-        if (target == null){
+        //잘못된 요청처리 (없는 folder나 dumfolder 삭제)
+        if (target == null || target == folderRepository.findById(1L).orElse(null)){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ID값이 " + id +  "인 folder 삭제에 실패하였습니다.");
         }
 
